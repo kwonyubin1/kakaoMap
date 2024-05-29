@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.my.member.dao.IMemberDAO">
+
+<insert id="registMember" parameterType="com.proj.my.member.vo.MemberVO">
+    INSERT INTO members (mem_id, mem_pw, mem_nm, mem_email, memberAddr1, memberAddr2, memberAddr3,addr)
+    VALUES (#{memId}, #{memPw}, #{memNm}, #{memEmail}, #{memberAddr1}, #{memberAddr2}, #{memberAddr3},#{addr})
+</insert>
+
+	<!-- 아이디 중복검사 -->
+  	<select id="idCheck" resultType="int">
+  	
+  		select count(*) from members where mem_id = #{memId}
+  	
+  	</select>
+  	
+	<select id="loginMember" parameterType="MemberVO" resultType="MemberVO">
+		SELECT mem_id
+	         , mem_pw
+	         , mem_nm
+	         , profile_img
+		FROM members 
+		WHERE user_yn = 'Y'
+		AND mem_id = #{memId}
+	</select>
+	
+	<update id="updateMember" parameterType="MemberVO">
+	UPDATE members SET mem_nm = #{memNm}
+	WHERE mem_id = #{memId}
+	</update>
+	
+	<update id="profileUpload" parameterType="MemberVO">
+		UPDATE members
+		SET profile_img = #{profileImg}
+		WHERE mem_id = #{memId}
+	</update>
+	
+	<select id="getMemberById" parameterType="String"
+      resultType="MemberVO">
+      SELECT mem_id, mem_pw, mem_email, mem_nm, profile_img
+      FROM
+      members
+      WHERE user_yn = 'Y' AND mem_id = #{memId}
+   </select>
+
+
+</mapper>

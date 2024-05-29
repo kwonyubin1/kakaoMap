@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.my.cook.dao.ICookDAO">
+
+<select id="getCookList" resultType="com.proj.my.cook.vo.CookVO">
+	  SELECT a.ck_no
+                    , a.ck_title
+                    , a.ck_category
+                    , a.mem_id
+                    , b.mem_nm
+                    , a.ck_image
+                    , a.ck_content
+                    , a.ck_hit
+                    , a.ck_reg_date
+               FROM cook_board a
+                   ,members b
+               WHERE a.mem_id = b.mem_id
+               AND a.ck_del_yn = 'N'
+               ORDER BY ck_no asc
+</select>
+
+<insert id="insertCook" parameterType="CookVO">
+	
+	Insert into COOK_BOARD (CK_NO,MEM_ID,CK_IMAGE,CK_TITLE,CK_CONTENT,CK_REG_DATE,CK_DEL_YN) 
+	values ((SELECT NVL(MAX(ck_no),0) + 1
+        	 			 FROM cook_board)
+        				, #{memId}
+        				, #{ckImage}
+        				, #{ckTitle}
+        				, #{ckContent}
+        				, SYSDATE
+        				, 'N')
+</insert>
+
+
+<select id="getCookBoard" resultType="CookVO" parameterType="int">
+		SELECT   a.ck_no
+			   , a.ck_image
+      	 	   , a.ck_title
+      	 	   , a.mem_id
+         	   , a.ck_content
+      		   , a.ck_reg_date
+        	   , a.ck_hit
+		FROM 
+			     cook_board a, members b
+	   WHERE  
+				 a.mem_id = b.mem_id
+   		AND 
+   				 a.ck_no = #{ckNo}
+   		AND
+   				 a.ck_del_yn = 'N'	 
+</select>
+
+<update id="updateCookBoard" parameterType="CookVO">
+	UPDATE cook_board
+	SET ck_title = #{ckTitle}
+		,ck_image = #{ckImage}
+	   ,ck_content = #{ckContent}
+	   ,ck_reg_date = SYSDATE
+	WHERE ck_no = #{ckNo}   
+</update>
+
+<update id="deleteCookBoard" parameterType="int">
+	
+	UPDATE cook_board
+	SET ck_del_yn = 'Y'
+	WHERE ck_no = #{ckNo}
+
+</update>
+
+<!-- 조회수를 증가시키는 쿼리 -->
+<update id="cookincreaseHit" parameterType="int">
+    UPDATE cook_board
+    SET ck_hit = ck_hit + 1
+    WHERE ck_no = #{ckNo}	 
+</update>
+
+
+<select id="likeSelect" resultType="com.proj.my.cook.vo.CookVO">
+    <![CDATA[
+    SELECT *
+    FROM (
+        SELECT a.ck_no
+             , a.ck_title
+             , a.ck_category
+             , a.mem_id
+             , b.mem_nm
+             , a.ck_image
+             , a.ck_content
+             , a.ck_hit
+             , a.ck_reg_date
+        FROM cook_board a
+        JOIN members b ON a.mem_id = b.mem_id
+        WHERE a.ck_del_yn = 'N'
+        ORDER BY a.ck_hit DESC
+    ) 
+    WHERE ROWNUM <= 6
+    ]]>
+</select>
+
+
+</mapper> 

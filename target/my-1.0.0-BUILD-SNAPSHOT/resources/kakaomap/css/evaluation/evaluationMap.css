@@ -1,0 +1,102 @@
+/* 전체 적용 */
+body {
+	color: #342b2b !important;
+}
+.style_none {
+	display: none;
+}
+.part {
+		height: 100%;
+}
+/* 셀렉박스 */
+select option[disabled] {
+	display: none;
+}
+/* 안의 내용 */
+#eva_map {
+	position:relative;
+	height: 100%;
+}
+.eva_search {
+	position: absolute;
+	z-index: 90;
+	top: 3%;
+	left: 3%;
+	background-color: white;
+	width: 21%;
+	height: 15%;
+	background-color: rgba(255,255,255,0.9);
+	border-radius: 10px;
+}
+
+.marker_list {
+	height: 100%;
+	max-width: 24.5% !important;
+}
+/* search 검색 부분 */
+.search_btn {
+	float: left;
+	margin-bottom: 2%;
+	margin-left: 3%;
+	background-color: rgba(243,243,243,1);
+	padding: 0.8%;
+	border-radius: 10px;
+	cursor: pointer;
+	border: solid 2px rgba(244, 83, 21, 0.0);
+}
+
+.search_bar {
+	border-bottom: solid 2px rgba(204,204,204,0.4);
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.search_input_btn {
+	border-radius: 10px;
+	border: rgba(244, 95, 21, 0.8) solid 2px;
+	width: 90%;
+	height: 30px;
+	margin-top: 5%;
+	margin-left: 5%;
+}
+
+#addr_search {
+	height: 20%;
+	border: none;
+	outline: none;
+	width: 70%;
+	position: absolute;
+	right: 20%;
+}
+
+#addr_search_btn {
+	background: url(https://s.zigbang.com/www/images/ic_title_searchbar_30x30_nor_white.png) center center / 100% no-repeat transparent;
+	width: 30px;
+	height: 30px;
+	background-color: rgba(244, 95, 21, 0.8);
+	position: absolute;
+	right: 5%;
+	top: 11%;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+.search_select {
+	background-color: rgba(243,243,243,1);
+	-webkit-appearance: none; 
+	-moz-appearance: none;
+	appearance: none;
+	outline-color: rgba(244, 83, 21, 0.5);
+}
+
+.search_select:focus {
+	background-color: rgba(250, 136, 11, 0.1);
+}
+
+.value_input {
+	background-color: rgba(250, 136, 11, 0.1);
+	border: solid 2px rgba(244, 83, 21, 0.5);
+}
+
